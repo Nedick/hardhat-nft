@@ -12,8 +12,8 @@ contract DynamicSvgNft is ERC721, Ownable {
     // store our SVG information somewhere
     // some logic to say "Show X Image" or "Show Y Image"
     uint256 private s_tokenCounter;
-    string private i_lowImageUri;
-    string private i_highImageUri;
+    string private s_lowImageUri;
+    string private s_highImageUri;
 
     mapping(uint256 => int256) public s_tokenIdToHighValue;
     AggregatorV3Interface internal immutable i_priceFeed;
@@ -27,8 +27,8 @@ contract DynamicSvgNft is ERC721, Ownable {
     ) ERC721("Dynamic SVG NFT", "DSN") {
         s_tokenCounter = 0;
         i_priceFeed = AggregatorV3Interface(priceFeedAddress);
-        i_lowImageUri = svgToImageURI(lowSvg);
-        i_highImageUri = svgToImageURI(highSvg);
+        s_lowImageUri = svgToImageURI(lowSvg);
+        s_highImageUri = svgToImageURI(highSvg);
     }
 
     function svgToImageURI(string memory svg) public pure returns (string memory) {
@@ -52,9 +52,9 @@ contract DynamicSvgNft is ERC721, Ownable {
         require(_exists(tokenId), "ERC721Metadata: URI Query for nonexistent token");
 
         (, int256 price, , , ) = i_priceFeed.latestRoundData();
-        string memory imageURI = i_lowImageUri;
+        string memory imageURI = s_lowImageUri;
         if (price >= s_tokenIdToHighValue[tokenId]) {
-            imageURI = i_highImageUri;
+            imageURI = s_highImageUri;
         }
 
         return
@@ -75,5 +75,21 @@ contract DynamicSvgNft is ERC721, Ownable {
                     )
                 )
             );
+    }
+
+    function getLowSVG() public view returns (string memory) {
+        return s_lowImageUri;
+    }
+
+    function getHighSVG() public view returns (string memory) {
+        return s_highImageUri;
+    }
+
+    function getPriceFeed() public view returns (AggregatorV3Interface) {
+        return i_priceFeed;
+    }
+
+    function getTokenCounter() public view returns (uint256) {
+        return s_tokenCounter;
     }
 }
