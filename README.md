@@ -19,7 +19,7 @@
 ### Rinkeby testnet contract addresses:
 - BasicNft      - 0x41Ac0A6ca3AEd9F04EA04DD1A31D5E77328eF65d
 - DynamicSvgNft - 0xf53Bc92aadd748296Cf2b5c5AD33B447d2930e6D
-- RandomIpfsNft - 0xf53Bc92aadd748296Cf2b5c5AD33B447d2930e6D
+- RandomIpfsNft - 0x9a360514C7FA30C23a4ab84bBC004Be12E3f869d
 
 # Getting Started
 
